@@ -36,21 +36,11 @@ namespace ActionTag.UI
 		/// </summary>
 		public class ActionTagStaticHud : Panel
 		{
-			private readonly Label _debugText;
-			
-			public ActionTagStaticHud( Panel parent )
+			public ActionTagStaticHud( Sandbox.UI.Panel parent )
 			{
 				Parent = parent;
 
-				_debugText = Parent.AddChild<Label>();
-				_debugText.Style.FontSize = 50;
-			}
-
-			public override void Tick()
-			{
-				base.Tick();
-				
-				_debugText.Text = $"{ActionTagGame.Instance.Round.ToString()} / {ActionTagGame.Instance.Round.TimeLeftFormatted}";
+				Parent.AddChild<RoundStatus>();
 			}
 		}
 	}
