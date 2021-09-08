@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using ActionTag.UI;
+using ActionTag;
 using Sandbox;
 
 namespace ActionTag

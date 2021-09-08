@@ -1,4 +1,4 @@
-﻿namespace ActionTag.UI
+﻿namespace ActionTag
 {
 	public class Panel : Sandbox.UI.Panel
 	{

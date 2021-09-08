@@ -4,6 +4,11 @@ namespace ActionTag
 {
 	public partial class ActionTagPlayer : Sandbox.Player
 	{
+		public int HorizontalSpeed
+		{
+			get => (int)Velocity.WithZ(0).Length;
+		}
+
 		public override void Respawn()
 		{
 			SetModel( "models/citizen/citizen.vmdl" );

@@ -4,7 +4,6 @@ namespace ActionTag
 {
 	public class ActionTagWalkController : BasePlayerController
 	{
-		public float SprintSpeed { get; set; } = 320.0f;
 		public float WalkSpeed { get; set; } = 150.0f;
 		public float DefaultSpeed { get; set; } = 260.0f;
 		public float Acceleration { get; set; } = 5.0f;
@@ -253,8 +252,7 @@ namespace ActionTag
 		{
 			var ws = Duck.GetWishSpeed();
 			if ( ws >= 0 ) return ws;
-
-			if ( Input.Down( InputButton.Run ) ) return SprintSpeed;
+			
 			if ( Input.Down( InputButton.Walk ) ) return WalkSpeed;
 
 			return DefaultSpeed;

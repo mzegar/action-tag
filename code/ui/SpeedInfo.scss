@@ -1,0 +1,14 @@
+﻿SpeedInfo {
+  position: absolute;
+  left: 50%;
+  top: 80%;
+  transform: translateX(-50%);
+  
+  Label {
+    &.speed {
+      font-size: 30px;
+      text-shadow: 0 0 2px black, 0 0 2px black;
+      color: white;
+    }
+  }
+}
