@@ -1,4 +1,4 @@
-<img src="./ui/slim_logo.png" alt="Action Tag Logo" width="200"/>
+<img src="./ui/logo_transparent_full.png" alt="Action Tag Logo" width="200"/>
 
 # Action Tag
 
