@@ -2,26 +2,15 @@
 
 namespace ActionTag
 {
-	partial class Player : Sandbox.Player
+	public partial class ActionTagPlayer : Sandbox.Player
 	{
 		public override void Respawn()
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
-
-			//
-			// Use WalkController for movement (you can make your own PlayerController for 100% control)
-			//
-			Controller = new WalkController();
-
-			//
-			// Use StandardPlayerAnimator  (you can make your own PlayerAnimator for 100% control)
-			//
+			
+			Controller = new ActionTagWalkController();
 			Animator = new StandardPlayerAnimator();
-
-			//
-			// Use ThirdPersonCamera (you can make your own Camera for 100% control)
-			//
-			Camera = new ThirdPersonCamera();
+			Camera = new ActionTagFirstPersonCamera();
 
 			EnableAllCollisions = true;
 			EnableDrawing = true;
@@ -29,6 +18,17 @@ namespace ActionTag
 			EnableShadowInFirstPerson = true;
 
 			base.Respawn();
+		}
+		
+		public void MakeSpectator()
+		{
+			EnableAllCollisions = false;
+			EnableDrawing = false;
+			Controller = null;
+			Camera = new DevCamera(); // TODO: Consider avoiding the re-creation of these.
+			
+			LifeState = LifeState.Dead;
+			Health = 0f;
 		}
 
 		/// <summary>
