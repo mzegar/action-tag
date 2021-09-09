@@ -18,19 +18,19 @@ namespace ActionTag
 			EnableDrawing = true;
 			EnableHideInFirstPerson = true;
 			EnableShadowInFirstPerson = true;
+			
+			RemoveRagdollEntity();
 
 			base.Respawn();
 		}
 		
-		public void MakeSpectator()
+		public override void OnKilled()
 		{
-			EnableAllCollisions = false;
-			EnableDrawing = false;
-			Controller = null;
-			Camera = new DevCamera(); // TODO: Consider avoiding the re-creation of these.
+			base.OnKilled();
 			
-			LifeState = LifeState.Dead;
-			Health = 0f;
+			BecomeRagdollOnServer( _lastDamageInfo.Force, GetHitboxBone( _lastDamageInfo.HitboxIndex ) );
+
+			MakeSpectator();
 		}
 
 		/// <summary>
@@ -41,13 +41,6 @@ namespace ActionTag
 			base.Simulate( cl );
 			
 			SimulateActiveChild( cl, ActiveChild );
-		}
-
-		public override void OnKilled()
-		{
-			base.OnKilled();
-
-			EnableDrawing = false;
 		}
 	}
 }
