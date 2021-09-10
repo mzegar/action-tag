@@ -36,6 +36,7 @@ namespace ActionTag
 		{
 			public ActionTagStaticHud()
 			{
+				AddChild<PlayerInfo>();
 				AddChild<RoundInfo>();
 				AddChild<ChatBox>();
 			}

@@ -2,10 +2,10 @@
 {
 	public static class ServerCommands
 	{
-		[ServerCmd( Name = "actiontag_playround_duration", Help = "Sets the duration of the play round." )]
-		public static void PlayRoundDuration(int duration)
+		[ServerCmd( Name = "actiontag_taground_duration", Help = "Sets the duration of the tag round." )]
+		public static void TagRoundDuration(int duration)
 		{
-			ActionTagGameSettings.PlayRoundDuration = duration;
+			ActionTagGameSettings.TagRoundDuration = duration;
 		}
 		
 		[ServerCmd( Name = "actiontag_preround_duration", Help = "Sets the duration of the pre round." )]

@@ -9,8 +9,8 @@ namespace ActionTag
         public virtual int RoundDuration => 0;
         public virtual string RoundName => "";
 
-        public readonly List<ActionTagPlayer> Players = new();
-        public readonly List<ActionTagPlayer> Spectators = new();
+        public List<ActionTagPlayer> Players = new();
+        public List<ActionTagPlayer> Spectators = new();
 
         public float RoundEndTime { get; set; }
 
@@ -56,6 +56,16 @@ namespace ActionTag
             {
                 Players.Add(player);
             }
+        }
+        
+        protected void AddSpectator(ActionTagPlayer player)
+        {
+	        Host.AssertServer();
+
+	        if (!Spectators.Contains(player))
+	        {
+		        Spectators.Add(player);
+	        }
         }
 
         public virtual void OnPlayerSpawn(ActionTagPlayer player) { }

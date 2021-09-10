@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ActionTag;
+using ActionTag.Teams;
 using Sandbox;
 
 namespace ActionTag
@@ -7,9 +9,14 @@ namespace ActionTag
 	public partial class ActionTagGame : Sandbox.Game
 	{
 		public static ActionTagGame Instance { get; private set; }
-		
+
 		[Net]
 		public BaseRound Round { get; private set; } = new WaitingRound();
+		
+		private List<BaseTeam> _teams;
+		public NoneTeam NoneTeam { get; set; }
+		public RunnerTeam RunnerTeam { get; set; }
+		public TaggerTeam TaggerTeam { get; set; }
 
 		public ActionTagGame()
 		{
@@ -20,9 +27,28 @@ namespace ActionTag
 				_ = new ActionTagHud();
 			}
 
+			_teams = new List<BaseTeam>();
+			NoneTeam = new NoneTeam();
+			RunnerTeam = new RunnerTeam();
+			TaggerTeam = new TaggerTeam();
+			AddTeam( NoneTeam );
+			AddTeam( RunnerTeam );
+			AddTeam( TaggerTeam );
+
 			_ = StartGameTimer();
 		}
 		
+		private void AddTeam( BaseTeam team )
+		{
+			_teams.Add( team );
+			team.Index = _teams.Count;
+		}
+
+		public BaseTeam GetTeamByIndex( int index )
+		{
+			return _teams[index - 1];
+		}
+
 		/// <summary>
 		/// Changes the round if minimum players is met. Otherwise, force changes to "WaitingRound"
 		/// </summary>

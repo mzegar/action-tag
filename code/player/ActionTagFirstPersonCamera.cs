@@ -12,7 +12,6 @@ namespace ActionTag
 		public override void Update()
 		{
 			MoveToTarget();
-
 			FieldOfView = 90f;
 		}
 

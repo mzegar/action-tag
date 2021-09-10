@@ -39,7 +39,7 @@ namespace ActionTag
         {
             base.OnTimeUp();
 
-            ActionTagGame.Instance?.ChangeRound(new WaitingRound());
+            ActionTagGame.Instance?.ChangeRound(new TagRound());
         }
 
         private static async Task StartRespawnTimer(ActionTagPlayer player)

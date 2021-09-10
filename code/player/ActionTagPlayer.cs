@@ -15,6 +15,8 @@ namespace ActionTag
 			Animator = new StandardPlayerAnimator();
 			Camera = new ActionTagFirstPersonCamera();
 
+			Team = ActionTagGame.Instance.NoneTeam;
+
 			EnableAllCollisions = true;
 			EnableDrawing = true;
 			EnableHideInFirstPerson = true;
