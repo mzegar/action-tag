@@ -5,10 +5,6 @@ namespace ActionTag
 {
 	public partial class ActionTagHud : Sandbox.HudEntity<RootPanel>
 	{
-		public static ActionTagHud Instance { set; get; }
-		public ActionTagStaticHud StaticHud;
-		public ActionTagAliveHud AliveHud;
-
 		public ActionTagHud()
 		{
 			if ( !IsClient )
@@ -16,9 +12,9 @@ namespace ActionTag
 				return;
 			}
 
-			Instance = this;
-			StaticHud = new ActionTagStaticHud( RootPanel );
-			AliveHud = new ActionTagAliveHud( RootPanel );
+			RootPanel.StyleSheet.Load( "/ui/ActionTagHud.scss" );
+			RootPanel.AddChild<ActionTagStaticHud>();
+			RootPanel.AddChild<ActionTagAliveHud>();
 		}
 		
 		[Event.Hotload]
@@ -34,30 +30,32 @@ namespace ActionTag
 		}
 
 		/// <summary>
-		/// This Hud always exists.
+		/// This Hud always shows.
 		/// </summary>
 		public class ActionTagStaticHud : Panel
 		{
-			public ActionTagStaticHud( Sandbox.UI.Panel parent )
+			public ActionTagStaticHud()
 			{
-				Parent = parent;
-
-				Parent.AddChild<RoundInfo>();
-				Parent.AddChild<ChatBox>();
-				Parent.AddChild<SpeedInfo>();
+				AddChild<RoundInfo>();
+				AddChild<ChatBox>();
 			}
 		}
 
 		/// <summary>
-		/// This Hud is only active when the player is alive.
+		/// This Hud only shows if the player is alive.
 		/// </summary>
 		public class ActionTagAliveHud : Panel
 		{
-			public ActionTagAliveHud( Sandbox.UI.Panel parent )
+			public ActionTagAliveHud()
 			{
-				Parent = parent;
-				
-				Parent.AddChild<SpeedInfo>();
+				AddChild<SpeedInfo>();
+			}
+
+			public override void Tick()
+			{
+				base.Tick();
+
+				Enabled = Local.Pawn is ActionTagPlayer {IsSpectator: false};
 			}
 		}
 	}
