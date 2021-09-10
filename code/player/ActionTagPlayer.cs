@@ -21,7 +21,7 @@ namespace ActionTag
 			EnableDrawing = true;
 			EnableHideInFirstPerson = true;
 			EnableShadowInFirstPerson = true;
-			
+
 			RemoveRagdollEntity();
 
 			ActionTagGame.Instance?.Round?.OnPlayerSpawn( this );

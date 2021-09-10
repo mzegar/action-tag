@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using ActionTag.Teams;
+using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
 
@@ -13,12 +14,12 @@ namespace ActionTag
 		{
 			Instance = this;
 			StyleSheet.Load("/ui/PlayerInfo.scss");
-			_currentTeam = Add.Label( "", "team" );
+			_currentTeam = Add.Label( Local.Pawn is ActionTagPlayer player ? player.Team.Name : "", "team" );
 		}
 
-		public void SetCurrentTeamIndex( int teamIndex )
+		public void SetCurrentTeamIndex( BaseTeam team )
 		{
-			_currentTeam.Text = ActionTagGame.Instance.GetTeamByIndex( teamIndex ).Name;
+			_currentTeam.Text = team.Name;
 		}
 	}
 }
