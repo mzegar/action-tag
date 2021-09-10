@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using ActionTag;
 using ActionTag.Teams;
 using Sandbox;
 
@@ -13,7 +12,7 @@ namespace ActionTag
 		[Net]
 		public BaseRound Round { get; private set; } = new WaitingRound();
 		
-		private List<BaseTeam> _teams;
+		private readonly List<BaseTeam> _teams;
 		public NoneTeam NoneTeam { get; set; }
 		public RunnerTeam RunnerTeam { get; set; }
 		public TaggerTeam TaggerTeam { get; set; }

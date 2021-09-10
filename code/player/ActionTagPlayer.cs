@@ -24,6 +24,7 @@ namespace ActionTag
 			
 			RemoveRagdollEntity();
 
+			ActionTagGame.Instance?.Round?.OnPlayerSpawn( this );
 			base.Respawn();
 		}
 
@@ -33,7 +34,6 @@ namespace ActionTag
 		public override void Simulate( Client cl )
 		{
 			base.Simulate( cl );
-			
 			SimulateActiveChild( cl, ActiveChild );
 		}
 	}

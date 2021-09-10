@@ -1,4 +1,7 @@
-﻿using Sandbox;
+﻿using System;
+using System.Linq;
+using ActionTag.Teams;
+using Sandbox;
 
 namespace ActionTag
 {
@@ -31,8 +34,18 @@ namespace ActionTag
 		        }
 	        }
 
-	        var unassignedPlayers = Players;
-	        
+	        var unassignedPlayers = Players.Where( ( p ) => p.Team is NoneTeam ).ToList();
+	        for ( var i = 0; i < unassignedPlayers.Count; ++i )
+	        {
+		        if ( i % 2 == 0 )
+		        {
+			        unassignedPlayers[i].Team = ActionTagGame.Instance.RunnerTeam;
+		        }
+		        else
+		        {
+			        unassignedPlayers[i].Team = ActionTagGame.Instance.TaggerTeam;
+		        }
+	        }
         }
 
         protected override void OnTimeUp()
