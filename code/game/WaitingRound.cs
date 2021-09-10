@@ -5,7 +5,7 @@ namespace ActionTag
 {
 	public class WaitingRound : BaseRound
 	{
-		public override string RoundName => "Waiting";
+		public override string RoundName => "Waiting for more players";
 
 		public override void OnSecond()
 		{
@@ -18,8 +18,6 @@ namespace ActionTag
 		public override void OnPlayerKilled( ActionTagPlayer player )
 		{
 			_ = StartRespawnTimer( player );
-
-			player.MakeSpectator();
 
 			base.OnPlayerKilled( player );
 		}

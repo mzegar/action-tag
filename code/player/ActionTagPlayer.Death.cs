@@ -7,6 +7,15 @@ namespace ActionTag
 		public PlayerCorpse Ragdoll { get; set; }
 		private DamageInfo _lastDamageInfo;
 		
+		public override void OnKilled()
+		{
+			base.OnKilled();
+			
+			BecomeRagdollOnServer( _lastDamageInfo.Force, GetHitboxBone( _lastDamageInfo.HitboxIndex ) );
+
+			MakeSpectator();
+		}
+		
 		public void MakeSpectator()
 		{
 			EnableAllCollisions = false;

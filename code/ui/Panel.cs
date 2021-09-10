@@ -8,8 +8,12 @@
 			get => _isEnabled;
 			set
 			{
-				_isEnabled = value;
+				if ( value == _isEnabled )
+				{
+					return;
+				}
 
+				_isEnabled = value;
 				SetClass("disabled", !_isEnabled);
 			}
 		}

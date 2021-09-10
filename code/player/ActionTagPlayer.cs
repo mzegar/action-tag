@@ -4,6 +4,7 @@ namespace ActionTag
 {
 	public partial class ActionTagPlayer : Sandbox.Player
 	{
+		public bool IsSpectator { get => Camera is not ActionTagFirstPersonCamera; }
 		public int HorizontalSpeed { get => (int)Velocity.WithZ(0).Length; }
 
 		public override void Respawn()
@@ -22,15 +23,6 @@ namespace ActionTag
 			RemoveRagdollEntity();
 
 			base.Respawn();
-		}
-		
-		public override void OnKilled()
-		{
-			base.OnKilled();
-			
-			BecomeRagdollOnServer( _lastDamageInfo.Force, GetHitboxBone( _lastDamageInfo.HitboxIndex ) );
-
-			MakeSpectator();
 		}
 
 		/// <summary>

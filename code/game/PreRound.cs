@@ -16,14 +16,23 @@ namespace ActionTag
         {
             _ = StartRespawnTimer(player);
 
-            player.MakeSpectator();
-
             base.OnPlayerKilled(player);
         }
 
         protected override void OnStart()
         {
+	        if ( !Host.IsServer )
+	        {
+		        return;
+	        }
 
+	        foreach ( var client in Client.All )
+	        {
+		        if ( client.Pawn is ActionTagPlayer player )
+		        {
+			        player.Respawn();
+		        }
+	        }
         }
 
         protected override void OnTimeUp()
