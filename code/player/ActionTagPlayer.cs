@@ -18,12 +18,10 @@ namespace ActionTag
 
 			Team = ActionTagGame.Instance.NoneTeam;
 
-			EnableAllCollisions = false;
+			EnableAllCollisions = true;
 			EnableDrawing = true;
 			EnableHideInFirstPerson = true;
 			EnableShadowInFirstPerson = true;
-			EnableTouch = true;
-			EnableTouchPersists = true;
 
 			RemoveRagdollEntity();
 
@@ -39,15 +37,6 @@ namespace ActionTag
 			var controller = GetActiveController();
 			controller?.Simulate( cl, this, GetActiveAnimator() );
 			SimulateActiveChild( cl, ActiveChild );
-		}
-		
-		public override void Touch(Entity other)
-		{
-			base.StartTouch(other);
-			if ( Team is not ChasersTeam ) return;
-			if ( other is not ActionTagPlayer otherPlayer || otherPlayer.Team is not RunnerTeam ) return;
-			if ( ActionTagGame.Instance?.Round is not PlayRound ) return;
-			other.TakeDamage( DamageInfo.Generic( 1000 ) );
 		}
 	}
 }
