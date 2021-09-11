@@ -14,7 +14,7 @@ namespace ActionTag
 		
 		public NoneTeam NoneTeam { get; set; }
 		public RunnerTeam RunnerTeam { get; set; }
-		public TaggerTeam TaggerTeam { get; set; }
+		public ChasersTeam ChasersTeam { get; set; }
 
 		public ActionTagGame()
 		{
@@ -27,7 +27,7 @@ namespace ActionTag
 			
 			NoneTeam = new NoneTeam();
 			RunnerTeam = new RunnerTeam();
-			TaggerTeam = new TaggerTeam();
+			ChasersTeam = new ChasersTeam();
 
 			_ = StartGameTimer();
 		}
@@ -72,7 +72,20 @@ namespace ActionTag
 			var player = new ActionTagPlayer();
 			client.Pawn = player;
 
-			player.Respawn();
+			if ( Round is WaitingRound or PreRound )
+			{
+				player.Respawn();
+			}
+		}
+		
+		public override void OnKilled( Entity entity)
+		{
+			if ( entity is ActionTagPlayer player )
+			{
+				Round?.OnPlayerKilled( player );
+			}
+
+			base.OnKilled( entity);
 		}
 	}
 }

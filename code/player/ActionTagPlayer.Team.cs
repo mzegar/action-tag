@@ -9,7 +9,7 @@ namespace ActionTag
 		public BaseTeam Team { get; set; }
 		private void OnTeamChanged()
 		{
-			PlayerInfo.Instance?.SetCurrentTeamIndex(Team);
+			PlayerInfo.Instance?.UpdateCurrentTeam();
 		}
 	}
 }

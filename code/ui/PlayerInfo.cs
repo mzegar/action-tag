@@ -17,9 +17,14 @@ namespace ActionTag
 			_currentTeam = Add.Label( Local.Pawn is ActionTagPlayer player ? player.Team.Name : "", "team" );
 		}
 
-		public void SetCurrentTeamIndex( BaseTeam team )
+		public void UpdateCurrentTeam()
 		{
-			_currentTeam.Text = team.Name;
+			if ( Local.Pawn is not ActionTagPlayer player )
+			{
+				return;
+			}
+			
+			_currentTeam.Text = player.Team.Name;
 		}
 	}
 }
