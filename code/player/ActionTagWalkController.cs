@@ -155,6 +155,11 @@ namespace ActionTag
 				CheckJumpButton();
 			}
 
+			if ( Input.MouseWheel != 0 )
+			{
+				CheckJumpButton();
+			}
+
 			// Fricion is handled before we add in any base velocity. That way, if we are on a conveyor,
 			//  we don't slow when standing still, relative to the conveyor.
 			bool bStartOnGround = GroundEntity != null;
