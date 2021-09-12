@@ -2,7 +2,7 @@
 {
 	public class PostRound : BaseRound
 	{
-		public override string RoundName => "Post";
+		public override string RoundName => "Round Over";
 		public override int RoundDuration
 		{
 			get => ActionTagGameSettings.PostRoundDuration;

@@ -6,7 +6,7 @@ namespace ActionTag
 {
 	public class PlayRound : BaseRound
     {
-        public override string RoundName => "Chase!";
+        public override string RoundName => "Action!";
         public override int RoundDuration
         {
             get => ActionTagGameSettings.TagRoundDuration;

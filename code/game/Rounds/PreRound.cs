@@ -6,7 +6,7 @@ namespace ActionTag
 {
 	public class PreRound : BaseRound
     {
-        public override string RoundName => "Preparing";
+        public override string RoundName => "Preparing Round";
         public override int RoundDuration
         {
             get => ActionTagGameSettings.PreRoundDuration;
