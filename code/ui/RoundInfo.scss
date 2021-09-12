@@ -2,34 +2,29 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  flex-direction: column;
-  margin-top: 5px;
+  justify-content: center;
+  align-items: center;
+  top: 20px;
+  color: white;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
   
-  Panel {
-    color: white;
-    border-radius: 8px;
-    margin-bottom: 5px;
+  .Round {
+    min-width: 250px;
     justify-content: center;
-    
-    &.Round {
-      min-width: 250px;
-      padding: 8px;
-      font-size: 28px;
-      text-shadow: 0 0 2px black, 0 0 2px black;
-      background-color: rgba(0, 0, 0, 0.9);
-    }
-    
-    &.Time {
-      padding: 8px;
-      font-size: 22px;
-      text-shadow: 0 0 2px black, 0 0 2px black;
-      background-color: rgba(0, 0, 0, 0.9);
-      align-self: center;
-
-      &.disabled {
-        display: none;
-        pointer-events: none;
-      }
-    }
+    border-radius: 8px;
+    margin-right: 4px;
+    padding: 10px 5px 10px 5px;
+    font-size: 24px;
+  }
+  
+  .Timer {
+    min-width: 150px;
+    justify-content: center;
+    border-radius: 0 8px 8px 0;
+    margin-left: 4px;
+    padding: 10px 5px 10px 5px;
+    font-size: 24px;
+    background-color: rgba(41, 98, 255, 0.7);
   }
 }
