@@ -4,7 +4,7 @@ namespace ActionTag
 {
 	partial class Hand : Carriable
 	{
-		public override string ViewModelPath => "items/hand/hand.vmdl";
+		public override string ViewModelPath => "carriables/hand/hand.vmdl";
 		public override float PrimaryRate => 1.0f;
 		public override float SecondaryRate => 0.3f;
 		public override bool IsMelee => true;

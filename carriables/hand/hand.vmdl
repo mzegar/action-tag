@@ -30,7 +30,7 @@
 					{
 						_class = "RenderMeshFile"
 						name = "hand"
-						filename = "items/hand/hand.fbx"
+						filename = "carriables/hand/hand.fbx"
 						import_translation = [ 0.0, 0.0, 0.0 ]
 						import_rotation = [ 0.0, 0.0, 0.0 ]
 						import_scale = 1.0
@@ -64,7 +64,7 @@
 						hidden = false
 						anim_markup_ordered = false
 						disable_compression = false
-						source_filename = "items/hand/hand_tag@idle.fbx"
+						source_filename = "carriables/hand/hand_tag@idle.fbx"
 						start_frame = -1
 						end_frame = -1
 						framerate = -1.0
@@ -84,7 +84,7 @@
 						hidden = false
 						anim_markup_ordered = false
 						disable_compression = false
-						source_filename = "items/hand/hand_tag@tag.fbx"
+						source_filename = "carriables/hand/hand_tag@tag.fbx"
 						start_frame = -1
 						end_frame = -1
 						framerate = -1.0
@@ -96,6 +96,6 @@
 		]
 		model_archetype = ""
 		primary_associated_entity = ""
-		anim_graph_name = "items/hand/hand.vanmgrph"
+		anim_graph_name = "carriables/hand/hand.vanmgrph"
 	}
 }

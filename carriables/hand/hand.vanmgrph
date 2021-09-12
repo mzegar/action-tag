@@ -81,7 +81,7 @@
 	}
 	m_previewModels = 
 	[
-		"items/hand/hand.vmdl",
+		"carriables/hand/hand.vmdl",
 	]
 	m_nodes = 
 	[
