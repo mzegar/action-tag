@@ -5,7 +5,7 @@ namespace ActionTag
 {
 	public class WaitingRound : BaseRound
 	{
-		public override string RoundName => "Waiting for more players";
+		public override string RoundName => "Waiting for players";
 
 		public override void OnSecond()
 		{
