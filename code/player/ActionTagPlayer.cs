@@ -8,6 +8,11 @@ namespace ActionTag
 		public bool IsSpectator { get => Camera is not ActionTagFirstPersonCamera; }
 		public int HorizontalSpeed { get => (int)Velocity.WithZ(0).Length; }
 
+		public ActionTagPlayer()
+		{
+			Inventory = new BaseInventory( this );
+		}
+
 		public override void Respawn()
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
@@ -24,6 +29,8 @@ namespace ActionTag
 			EnableShadowInFirstPerson = true;
 
 			RemoveRagdollEntity();
+
+			Inventory.Add( new Hand(), true );
 
 			ActionTagGame.Instance?.Round?.OnPlayerSpawn( this );
 			base.Respawn();
