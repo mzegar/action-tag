@@ -1,9 +1,28 @@
 ﻿PlayerInfo {
-  Label {
-    &.team {
-      font-size: 30px;
-      text-shadow: 0 0 2px black, 0 0 2px black;
-      color: white;
-    }
+  position: absolute;
+  flex-direction: column;
+  left: 30px;
+  bottom: 30px;
+  border-radius: 8px;
+  color: white;
+  
+  .Team, .Health {
+    justify-content: center;
+    align-content: center;
+    min-width: 200px;
+    padding: 10px 5px 10px 5px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-size: 30px;
+  }
+  
+  .Team {
+
+  }
+  
+  .Health {
+    padding: 10px 5px 10px 5px;
+    background-color: rgba(0, 0, 0, 0.7);
+    margin-top: 10px;
   }
 }

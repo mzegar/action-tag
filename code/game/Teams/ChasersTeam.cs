@@ -2,6 +2,6 @@
 {
 	public partial class ChasersTeam : BaseTeam
 	{
-		public override string Name => "Chaser";
+		public override string Name => "🏃‍♂️ Chaser";
 	}
 }
