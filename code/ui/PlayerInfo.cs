@@ -8,6 +8,7 @@ namespace ActionTag
 	public class PlayerInfo : Panel
 	{
 		public static PlayerInfo Instance;
+		private readonly Sandbox.UI.Panel _teamWrapper;
 		private readonly Label _currentTeam;
 		private readonly Label _currentHealth;
 		
@@ -25,8 +26,8 @@ namespace ActionTag
 				health = $"✚ {player.Health.CeilToInt()}";
 			}
 
-			var teamWrapper = Add.Panel( "Team" );
-			_currentTeam = teamWrapper.Add.Label( team );
+			_teamWrapper = Add.Panel( "Team" );
+			_currentTeam = _teamWrapper.Add.Label( team );
 
 			var healthWrapper = Add.Panel( "Health" );
 			_currentHealth = healthWrapper.Add.Label( health );
@@ -40,7 +41,7 @@ namespace ActionTag
 			{
 				return;
 			}
-			
+
 			_currentHealth.Text = $"✚ {player.Health.CeilToInt()}";
 		}
 
@@ -51,6 +52,7 @@ namespace ActionTag
 				return;
 			}
 			
+			_teamWrapper.SetClass("disabled", player.Team is NoneTeam);
 			_currentTeam.Text = player.Team.Name;
 		}
 	}
