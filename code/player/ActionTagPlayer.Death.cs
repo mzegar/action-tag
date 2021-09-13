@@ -16,8 +16,8 @@ namespace ActionTag
 
 			MakeSpectator();
 		}
-		
-		public void MakeSpectator()
+
+		private void MakeSpectator()
 		{
 			EnableAllCollisions = false;
 			EnableDrawing = false;
