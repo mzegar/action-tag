@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using ActionTag.UI;
+using Sandbox;
 using Sandbox.UI;
 
 namespace ActionTag
@@ -50,6 +51,7 @@ namespace ActionTag
 			public ActionTagAliveHud()
 			{
 				AddChild<SpeedInfo>();
+				AddChild<Crosshair>();
 			}
 
 			public override void Tick()

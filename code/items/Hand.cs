@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using System.Threading.Tasks;
+using Sandbox;
 
 namespace ActionTag
 {
@@ -18,7 +19,14 @@ namespace ActionTag
 			SetModel( "" );
 		}
 
-		public virtual void MeleeStrike( float damage, float force )
+		// Wait for the "Tag" animation to play before we do the MeleeStrike.
+		private async Task DelayMeleeStrike()
+		{
+			await Task.Delay( 250 );
+			MeleeStrike( BaseDamage, 1.5f );
+		}
+
+		protected virtual void MeleeStrike( float damage, float force )
 		{
 			var forward = Owner.EyeRot.Forward;
 			forward = forward.Normal;
@@ -45,7 +53,7 @@ namespace ActionTag
 		{
 			(Owner as AnimEntity).SetAnimBool( "b_attack", true );
 			ShootEffects();
-			MeleeStrike( BaseDamage, 1.5f );
+			_ = DelayMeleeStrike();
 		}
 		
 		public override void SimulateAnimator( PawnAnimator anim )

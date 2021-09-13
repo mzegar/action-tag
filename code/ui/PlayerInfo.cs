@@ -1,4 +1,5 @@
-﻿using ActionTag.Teams;
+﻿using System;
+using ActionTag.Teams;
 using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
@@ -27,6 +28,7 @@ namespace ActionTag
 			}
 
 			_teamWrapper = Add.Panel( "Team" );
+			_teamWrapper.SetClass("disabled", team == "None"); // TODO: Clean this up when spectating players is a thing.
 			_currentTeam = _teamWrapper.Add.Label( team );
 
 			var healthWrapper = Add.Panel( "Health" );
