@@ -28,7 +28,7 @@ namespace ActionTag
 			}
 
 			_teamWrapper = Add.Panel( "Team" );
-			_teamWrapper.SetClass("disabled", team == "None"); // TODO: Clean this up when spectating players is a thing.
+			_teamWrapper.SetClass("disabled", team is "" or "None"); // TODO: Clean this up when spectating players is a thing.
 			_currentTeam = _teamWrapper.Add.Label( team );
 
 			var healthWrapper = Add.Panel( "Health" );

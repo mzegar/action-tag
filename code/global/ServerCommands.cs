@@ -29,6 +29,18 @@ namespace ActionTag
 			ActionTagGameSettings.PreRoundDuration = duration;
 		}
 		
+		[ServerCmd( Name = "actiontag_postround_duration", Help = "Sets the duration of the post round." )]
+		public static void PostRoundDuration(int duration = 0)
+		{
+			if ( duration == 0 )
+			{
+				Log.Info($"PostRoundDuration: {duration}");
+				return;
+			}
+			
+			ActionTagGameSettings.PostRoundDuration = duration;
+		}
+		
 		[ServerCmd( Name = "actiontag_minimum_players", Help = "Sets the amount of players needed to start the game." )]
 		public static void MinimumPlayers(int players = 0)
 		{
@@ -59,12 +71,12 @@ namespace ActionTag
 				return;
 			}
 
-			player.Team = teamName.ToLower() switch
+			player.SetTeam(teamName.ToLower() switch
 			{
 				"runner" => ActionTagGame.Instance?.RunnerTeam,
 				"chaser" => ActionTagGame.Instance?.ChasersTeam,
 				_ => player.Team
-			};
+			});
 			
 			round.CheckRoundStatus();
 		}

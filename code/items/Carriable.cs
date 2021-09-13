@@ -2,7 +2,7 @@
 
 namespace ActionTag
 {
-	partial class Carriable : BaseWeapon
+	public partial class Carriable : BaseWeapon
 	{
 		public virtual bool IsMelee => false;
 		public virtual int BaseDamage => 10;

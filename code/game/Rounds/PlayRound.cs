@@ -40,11 +40,11 @@ namespace ActionTag
 	        {
 		        if ( i % 2 == 0 )
 		        {
-			        Players[i].Team = ActionTagGame.Instance.ChasersTeam;
+			        Players[i].SetTeam(ActionTagGame.Instance.ChasersTeam);
 		        }
 		        else
 		        {
-			        Players[i].Team = ActionTagGame.Instance.RunnerTeam;
+			        Players[i].SetTeam(ActionTagGame.Instance.RunnerTeam);
 		        }
 	        }
         }

@@ -20,17 +20,15 @@ namespace ActionTag
 			Controller = new ActionTagWalkController();
 			Animator = new StandardPlayerAnimator();
 			Camera = new ActionTagFirstPersonCamera();
-
-			Team = ActionTagGame.Instance.NoneTeam;
-
+			
+			SetTeam( new NoneTeam() );
+			
 			EnableAllCollisions = true;
 			EnableDrawing = true;
 			EnableHideInFirstPerson = true;
 			EnableShadowInFirstPerson = true;
 
 			RemoveRagdollEntity();
-
-			Inventory.Add( new Hand(), true );
 
 			ActionTagGame.Instance?.Round?.OnPlayerSpawn( this );
 			base.Respawn();

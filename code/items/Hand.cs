@@ -3,7 +3,7 @@ using Sandbox;
 
 namespace ActionTag
 {
-	partial class Hand : Carriable
+	public partial class Hand : Carriable
 	{
 		public override string ViewModelPath => "carriables/hand/hand.vmdl";
 		public override float PrimaryRate => 1.0f;
