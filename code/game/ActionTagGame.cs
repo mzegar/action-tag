@@ -12,9 +12,9 @@ namespace ActionTag
 		[Net]
 		public BaseRound Round { get; private set; } = new WaitingRound();
 		
-		public NoneTeam NoneTeam { get; set; }
-		public RunnerTeam RunnerTeam { get; set; }
-		public ChasersTeam ChasersTeam { get; set; }
+		public NoneTeam NoneTeam { get; }
+		public RunnerTeam RunnerTeam { get; }
+		public ChasersTeam ChasersTeam { get; }
 
 		public ActionTagGame()
 		{

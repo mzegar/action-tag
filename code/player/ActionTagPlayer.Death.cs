@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using System.Threading.Tasks;
+using Sandbox;
 
 namespace ActionTag
 {
@@ -24,6 +25,15 @@ namespace ActionTag
 			Camera = new SpectateRagdollCamera();
 			LifeState = LifeState.Dead;
 			Health = 0f;
+
+			_ = SwapToFreeCamera( 2000 );
+		}
+
+		private async Task SwapToFreeCamera(int ms)
+		{
+			await Task.Delay(ms);
+			if ( IsSpectator )
+				Camera = new ActionTagFreeCamera();
 		}
 		
 		private void BecomeRagdollOnServer( Vector3 force, int forceBone )

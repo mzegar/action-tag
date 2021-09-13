@@ -24,16 +24,11 @@ namespace ActionTag
 		{
 			base.Tick();
 
-			_currentRound.Text = ActionTagGame.Instance?.Round.RoundName;
+			_currentRound.Text = ActionTagGame.Instance?.Round?.RoundName;
 
-			if ( ActionTagGame.Instance?.Round is not WaitingRound )
-			{
-				_currentTime.Text = $"⏱️ {ActionTagGame.Instance?.Round.TimeLeftFormatted}";
-			}
-			else
-			{
-				_currentTime.Text = $"{Client.All.Count} / {ActionTagGameSettings.MinimumPlayers}";
-			}
+			_currentTime.Text = ActionTagGame.Instance?.Round is not WaitingRound ? 
+								$"⏱️ {ActionTagGame.Instance?.Round?.TimeLeftFormatted}" : 
+								$"{Client.All.Count} / {ActionTagGameSettings.MinimumPlayers}";
 		}
 	}
 }
