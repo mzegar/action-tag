@@ -22,7 +22,7 @@ namespace ActionTag
 			Camera = new ActionTagFirstPersonCamera();
 			
 			SetTeam( new NoneTeam() );
-			
+
 			EnableAllCollisions = true;
 			EnableDrawing = true;
 			EnableHideInFirstPerson = true;

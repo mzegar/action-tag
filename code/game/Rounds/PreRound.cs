@@ -12,6 +12,8 @@ namespace ActionTag
             get => ActionTagGameSettings.PreRoundDuration;
         }
 
+        private bool _playedCountDownSound = false;
+
         public override void OnPlayerKilled(ActionTagPlayer player)
         {
             _ = StartRespawnTimer(player);
@@ -25,6 +27,8 @@ namespace ActionTag
 	        {
 		        return;
 	        }
+
+	        _playedCountDownSound = false;
 
 	        foreach ( var client in Client.All )
 	        {
@@ -57,6 +61,20 @@ namespace ActionTag
             AddPlayer(player);
 
             base.OnPlayerSpawn(player);
+        }
+
+        public override void OnSecond()
+        {
+	        if ( Host.IsServer )
+	        {
+		        base.OnSecond();
+
+		        if ( TimeLeft <= 3 && !_playedCountDownSound )
+		        {
+			        Sound.FromScreen("countdown");
+			        _playedCountDownSound = true;
+		        }
+	        }
         }
     }
 }
