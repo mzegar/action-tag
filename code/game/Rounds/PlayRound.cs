@@ -12,6 +12,16 @@ namespace ActionTag
             get => ActionTagGameSettings.TagRoundDuration;
         }
 
+        protected override void OnStart()
+        {
+	        base.OnStart();
+
+	        foreach (var chaser in Utils.GetAliveChasers())
+	        {
+		        chaser.Controller.IsFrozen = false;
+	        }
+        }
+
         public override void OnPlayerKilled(ActionTagPlayer player)
         {
 	        base.OnPlayerKilled(player);
@@ -50,20 +60,37 @@ namespace ActionTag
         private BaseTeam CheckForWinningTeam()
         {
 	        var alivePlayers = Utils.GetAlivePlayers();
-	        var aliveRunners = !alivePlayers.Any( ( p ) => p.Team is RunnerTeam && !p.IsSpectator );
-	        if ( !aliveRunners )
+
+	        var aliveChasers = 0;
+	        var aliveRunners = 0;
+	        foreach ( var player in alivePlayers )
+	        {
+		        switch (player.Team)
+		        {
+			        case ChasersTeam:
+				        aliveChasers += 1;
+				        break;
+			        case RunnerTeam:
+				        aliveRunners += 1;
+				        break;
+		        }
+	        }
+	        
+	        Log.Info(aliveRunners  );
+	        Log.Info(aliveChasers  );
+
+	        if ( aliveRunners == 0 )
 	        {
 		        return ActionTagGame.Instance?.ChasersTeam;
 	        }
-	        
-	        var aliveChasers = !alivePlayers.Any( ( p ) => p.Team is ChasersTeam && !p.IsSpectator );
-	        if ( !aliveChasers )
+
+	        if ( aliveChasers == 0 )
 	        {
 		        return ActionTagGame.Instance?.RunnerTeam;
 	        }
 
 	        // The round continues.
-	        return new NoneTeam();
+	        return ActionTagGame.Instance?.NoneTeam;
         }
     }
 }

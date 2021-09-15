@@ -61,7 +61,7 @@ namespace ActionTag
 				return;
 			}
 
-			if ( ConsoleSystem.Caller.Pawn is not ActionTagPlayer player || player.IsSpectator )
+			if ( ConsoleSystem.Caller.Pawn is not ActionTagPlayer player || player.Health == 0f )
 			{
 				return;
 			}

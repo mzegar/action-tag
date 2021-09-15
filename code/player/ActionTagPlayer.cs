@@ -7,6 +7,12 @@ namespace ActionTag
 	{
 		public bool IsSpectator { get => Camera is not ActionTagFirstPersonCamera; }
 		public int HorizontalSpeed { get => (int)Velocity.WithZ(0).Length; }
+		
+		public new ActionTagWalkController Controller
+		{
+			get => (ActionTagWalkController) base.Controller;
+			private set => base.Controller = value;
+		}
 
 		public ActionTagPlayer()
 		{

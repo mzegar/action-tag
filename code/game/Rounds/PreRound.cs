@@ -14,8 +14,8 @@ namespace ActionTag
         }
 
         private bool _playedCountDownSound = false;
-        private List<ActionTagPlayer> _runners = new List<ActionTagPlayer>();
-        private List<ActionTagPlayer> _chasers = new List<ActionTagPlayer>();
+        private readonly List<ActionTagPlayer> _runners = new List<ActionTagPlayer>();
+        private readonly List<ActionTagPlayer> _chasers = new List<ActionTagPlayer>();
 
         protected override void OnStart()
         {
@@ -43,18 +43,30 @@ namespace ActionTag
 	        var alivePlayers = Utils.GetShuffledAlivePlayers();
 	        for ( var i = 0; i < alivePlayers.Count; ++i )
 	        {
-		        var player = alivePlayers[i].GetClientOwner();
 		        if ( i % 2 == 0 )
 		        {
-			        Log.Info($"{player.Name} is a runner");
-			        alivePlayers[i].SetTeam(ActionTagGame.Instance.RunnerTeam);
+			        SetTeamRunners(alivePlayers[i]);
 		        }
 		        else
 		        {
-			        Log.Info($"{player.Name} is a chaser");
-			        alivePlayers[i].SetTeam(ActionTagGame.Instance.ChasersTeam);
+			        SetTeamChasers(alivePlayers[i]);
 		        }
 	        }
+        }
+
+        // Unique method since we need to keep track of players that are runners.
+        private void SetTeamRunners(ActionTagPlayer player)
+        {
+	        player.SetTeam( ActionTagGame.Instance?.RunnerTeam );
+	        _runners.Add( player );
+        }
+        
+        // Unique method since we need to keep track of players that are chasers.
+        private void SetTeamChasers(ActionTagPlayer player)
+        {
+	        player.Controller.IsFrozen = true;
+	        player.SetTeam( ActionTagGame.Instance?.ChasersTeam );
+	        _chasers.Add( player );
         }
 
         // Let's let people join during this round. Assign them to the team with less players.
@@ -71,13 +83,11 @@ namespace ActionTag
 	        {
 		        if ( _chasers.Count >= _runners.Count )
 		        {
-			        player.SetTeam( ActionTagGame.Instance?.RunnerTeam );
-			        _runners.Add( player );
+			        SetTeamRunners(player);
 		        }
 		        else
 		        {
-			        player.SetTeam( ActionTagGame.Instance?.ChasersTeam );
-			        _chasers.Add( player );
+					SetTeamChasers(player);
 		        }
 	        }
         }

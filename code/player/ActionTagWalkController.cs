@@ -25,6 +25,7 @@ namespace ActionTag
 		public float AirControl { get; set; } = 42.0f;
 		public bool Swimming { get; set; } = false;
 		public bool AutoJump { get; set; } = false;
+		public bool IsFrozen { get; set; } = false;
 
 		public Duck Duck;
 		public Unstuck Unstuck;
@@ -255,6 +256,7 @@ namespace ActionTag
 
 		public virtual float GetWishSpeed()
 		{
+			if ( IsFrozen ) return 0;
 			var ws = Duck.GetWishSpeed();
 			if ( ws >= 0 ) return ws;
 			
