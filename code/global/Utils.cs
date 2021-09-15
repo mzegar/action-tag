@@ -8,9 +8,11 @@ namespace ActionTag
 {
 	public static partial class Utils
 	{
-		public static bool HasMinimumPlayers()
+		// Hacky, but we can factor in any disconnected players using the param.
+		public static bool HasMinimumPlayers(List<Entity> disconnectPlayers = null)
 		{
-			return Client.All.Count >= ActionTagGameSettings.MinimumPlayers;
+			var disconnectPlayerCount = disconnectPlayers?.Count ?? 0;
+			return Client.All.Count - disconnectPlayerCount >= ActionTagGameSettings.MinimumPlayers;
 		}
 
 		public static List<ActionTagPlayer> GetAlivePlayers()

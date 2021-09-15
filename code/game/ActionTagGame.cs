@@ -84,7 +84,7 @@ namespace ActionTag
 
 		public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
 		{
-			Round?.OnPlayerLeave();
+			Round?.OnPlayerLeave(cl.Pawn);
 
 			if ( cl.Pawn is ActionTagPlayer player )
 			{

@@ -18,14 +18,6 @@ namespace ActionTag
 			
 			SetModel( "" );
 		}
-
-		// Wait for the "Tag" animation to play before we do the MeleeStrike.
-		private async Task DelayMeleeStrike()
-		{
-			await Task.Delay( 250 );
-			MeleeStrike( BaseDamage, 1.5f );
-		}
-
 		protected virtual void MeleeStrike( float damage, float force )
 		{
 			var forward = Owner.EyeRot.Forward;
@@ -36,10 +28,6 @@ namespace ActionTag
 				if ( !tr.Entity.IsValid() ) continue;
 
 				if ( !IsServer ) continue;
-				
-				if (tr.Entity is not ActionTagPlayer otherPlayer) continue;
-
-				if (Owner is ActionTagPlayer player && player.Team.Name == otherPlayer.Team.Name) continue;
 
 				using ( Prediction.Off() )
 				{
@@ -57,7 +45,7 @@ namespace ActionTag
 		{
 			(Owner as AnimEntity).SetAnimBool( "b_attack", true );
 			ShootEffects();
-			_ = DelayMeleeStrike();
+			MeleeStrike( BaseDamage, 1.5f );
 		}
 		
 		public override void SimulateAnimator( PawnAnimator anim )

@@ -47,7 +47,22 @@ namespace ActionTag
 			controller?.Simulate( cl, this, GetActiveAnimator() );
 			SimulateActiveChild( cl, ActiveChild );
 		}
-		
-		
+
+		public override void TakeDamage( DamageInfo info )
+		{
+			// No damage allowed outside of the playground.
+			if ( ActionTagGame.Instance?.Round is not PlayRound )
+			{
+				return;
+			}
+
+			// Only damage people that are not on your team.
+			if ( info.Attacker is ActionTagPlayer player && player.Team.Name == Team.Name )
+			{
+				return;
+			}
+			
+			base.TakeDamage( info );
+		}
 	}
 }

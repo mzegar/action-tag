@@ -41,7 +41,7 @@ namespace ActionTag
 	        player.MakeSpectator();
         }
         
-        public override void OnPlayerLeave()
+        public override void OnPlayerLeave(Entity entity)
         {
 	        CheckRoundStatus();
         }
