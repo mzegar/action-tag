@@ -18,13 +18,27 @@ namespace ActionTag
 			
 			SetModel( "" );
 		}
-		protected virtual void MeleeStrike( float damage, float force )
+
+		private async Task DelayStrike()
 		{
+			await Task.Delay( 300 );
+			MeleeStrike(BaseDamage, 5f);
+		}
+
+		private void MeleeStrike( float damage, float force )
+		{
+			if ( !IsValid )
+			{
+				return;
+			}
+			
 			var forward = Owner.EyeRot.Forward;
 			forward = forward.Normal;
 
 			foreach ( var tr in TraceBullet( Owner.EyePos, Owner.EyePos + forward * MeleeDistance, 10f ) )
 			{
+				if ( !IsValid ) return;
+				
 				if ( !tr.Entity.IsValid() ) continue;
 
 				if ( !IsServer ) continue;
@@ -45,7 +59,7 @@ namespace ActionTag
 		{
 			(Owner as AnimEntity).SetAnimBool( "b_attack", true );
 			ShootEffects();
-			MeleeStrike( BaseDamage, 1.5f );
+			_ = DelayStrike();
 		}
 		
 		public override void SimulateAnimator( PawnAnimator anim )
