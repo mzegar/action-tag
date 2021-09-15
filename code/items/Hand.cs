@@ -36,6 +36,10 @@ namespace ActionTag
 				if ( !tr.Entity.IsValid() ) continue;
 
 				if ( !IsServer ) continue;
+				
+				if (tr.Entity is not ActionTagPlayer otherPlayer) continue;
+
+				if (Owner is ActionTagPlayer player && player.Team.Name == otherPlayer.Team.Name) continue;
 
 				using ( Prediction.Off() )
 				{
