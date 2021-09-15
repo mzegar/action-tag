@@ -1,5 +1,4 @@
-﻿using ActionTag.UI;
-using Sandbox;
+﻿using Sandbox;
 using Sandbox.UI;
 
 namespace ActionTag

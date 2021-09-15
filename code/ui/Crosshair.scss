@@ -1,14 +1,10 @@
-﻿.rounded {
-  border-radius: 8px;
-}
-
-.circular {
-  border-radius: 50%;
-}
-
-.centered {
+﻿Crosshair {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
+  height: 5px;
+  width: 5px;
+  background-color: white;
+  border-radius: 8px;
 }
