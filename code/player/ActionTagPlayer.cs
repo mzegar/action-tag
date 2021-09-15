@@ -1,10 +1,15 @@
-﻿using ActionTag.Teams;
-using Sandbox;
+﻿using Sandbox;
 
 namespace ActionTag
 {
-	public partial class ActionTagPlayer : Sandbox.Player
+	public partial class ActionTagPlayer : Player
 	{
+		/// <summary>
+		/// The clothing container is what dresses the citizen
+		/// </summary>
+		private readonly Clothing.Container _clothing = new();
+
+		
 		public bool IsSpectator { get => Camera is not ActionTagFirstPersonCamera; }
 		public int HorizontalSpeed { get => (int)Velocity.WithZ(0).Length; }
 		
@@ -13,10 +18,21 @@ namespace ActionTag
 			get => (ActionTagWalkController) base.Controller;
 			private set => base.Controller = value;
 		}
-
+		
+		/// <summary>
+		/// Default init
+		/// </summary>
 		public ActionTagPlayer()
 		{
 			Inventory = new BaseInventory( this );
+		}
+
+		/// <summary>
+		/// Initialize using this client
+		/// </summary>
+		public ActionTagPlayer( Client cl ) : this()
+		{
+			_clothing.LoadFromClient( cl );
 		}
 
 		public override void Respawn()
@@ -26,6 +42,8 @@ namespace ActionTag
 			Controller = new ActionTagWalkController();
 			Animator = new StandardPlayerAnimator();
 			Camera = new ActionTagFirstPersonCamera();
+			
+			_clothing.DressEntity( this );
 
 			EnableAllCollisions = true;
 			EnableDrawing = true;

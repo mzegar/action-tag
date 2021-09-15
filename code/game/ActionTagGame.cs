@@ -69,7 +69,7 @@ namespace ActionTag
 		{
 			base.ClientJoined( client );
 
-			var player = new ActionTagPlayer();
+			var player = new ActionTagPlayer( client );
 			client.Pawn = player;
 
 			if ( Round is WaitingRound or PreRound )
