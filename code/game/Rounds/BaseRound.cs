@@ -47,7 +47,7 @@ namespace ActionTag
 
         public virtual void OnPlayerKilled(ActionTagPlayer player) { }
 
-        public virtual void OnPlayerLeave(Entity ent) { }
+        public virtual void OnPlayerLeave() { }
 
         public virtual void OnSecond()
         {

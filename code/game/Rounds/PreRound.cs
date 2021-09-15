@@ -116,9 +116,9 @@ namespace ActionTag
 	        }
         }
         
-        public override void OnPlayerLeave(Entity ent)
+        public override void OnPlayerLeave()
         {
-	        if ( Host.IsServer && !Utils.HasMinimumPlayers(new List<Entity>(){ent}) )
+	        if ( Host.IsServer && !Utils.HasMinimumPlayers() )
 	        {
 		        ActionTagGame.Instance?.ForceRoundChange(new WaitingRound());
 	        }

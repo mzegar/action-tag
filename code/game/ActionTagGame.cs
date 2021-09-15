@@ -84,9 +84,14 @@ namespace ActionTag
 
 		public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
 		{
-			base.ClientDisconnect( cl, reason );
+			Round?.OnPlayerLeave();
 
-			Round?.OnPlayerLeave( cl.Pawn );
+			if ( cl.Pawn is ActionTagPlayer player )
+			{
+				player.RemoveRagdollEntity();
+			}
+			
+			base.ClientDisconnect( cl, reason );
 		}
 
 		public override void OnKilled( Entity entity)
