@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Sandbox;
 
 namespace ActionTag
@@ -26,6 +28,12 @@ namespace ActionTag
 			}
 
 			return alivePlayers;
+		}
+
+		public static List<ActionTagPlayer> GetShuffledAlivePlayers()
+		{
+			var alivePlayers = GetAlivePlayers();
+			return alivePlayers.OrderBy( ( _ ) => Rand.Int( 0, alivePlayers.Count ) ).ToList();
 		}
 	}
 }

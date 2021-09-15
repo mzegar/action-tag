@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using ActionTag.Teams;
 using Sandbox;
 
 namespace ActionTag
@@ -14,6 +14,8 @@ namespace ActionTag
         }
 
         private bool _playedCountDownSound = false;
+        private List<ActionTagPlayer> _runners = new List<ActionTagPlayer>();
+        private List<ActionTagPlayer> _chasers = new List<ActionTagPlayer>();
 
         protected override void OnStart()
         {
@@ -38,7 +40,7 @@ namespace ActionTag
 
         private void AssignTeams()
         {
-	        var alivePlayers = Utils.GetAlivePlayers();
+	        var alivePlayers = Utils.GetShuffledAlivePlayers();
 	        for ( var i = 0; i < alivePlayers.Count; ++i )
 	        {
 		        var player = alivePlayers[i].GetClientOwner();
@@ -51,6 +53,31 @@ namespace ActionTag
 		        {
 			        Log.Info($"{player.Name} is a chaser");
 			        alivePlayers[i].SetTeam(ActionTagGame.Instance.ChasersTeam);
+		        }
+	        }
+        }
+
+        // Let's let people join during this round. Assign them to the team with less players.
+        public override void OnPlayerSpawn( ActionTagPlayer player )
+        {
+	        base.OnPlayerSpawn( player );
+
+	        if ( !Host.IsServer )
+	        {
+		        return;
+	        }
+
+	        if ( player.Team is NoneTeam or null )
+	        {
+		        if ( _chasers.Count >= _runners.Count )
+		        {
+			        player.SetTeam( ActionTagGame.Instance?.RunnerTeam );
+			        _runners.Add( player );
+		        }
+		        else
+		        {
+			        player.SetTeam( ActionTagGame.Instance?.ChasersTeam );
+			        _chasers.Add( player );
 		        }
 	        }
         }
@@ -95,6 +122,8 @@ namespace ActionTag
 
 		        if ( TimeLeft <= 2 && !_playedCountDownSound )
 		        {
+			        // Just in case we don't have enough players, let's not play the sound queue.
+			        // OnTimeUp will handle the transition back to WaitingRound.
 			        if ( Utils.HasMinimumPlayers() )
 			        {
 				        Sound.FromScreen("countdown");
@@ -102,6 +131,14 @@ namespace ActionTag
 			        }
 		        }
 	        }
+        }
+
+        protected override void OnFinish()
+        {
+	        base.OnFinish();
+	        
+	        _runners.Clear();
+	        _chasers.Clear();
         }
     }
 }

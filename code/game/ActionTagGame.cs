@@ -72,7 +72,7 @@ namespace ActionTag
 			var player = new ActionTagPlayer();
 			client.Pawn = player;
 
-			if ( Round is WaitingRound )
+			if ( Round is WaitingRound or PreRound )
 			{
 				player.Respawn();
 			}
