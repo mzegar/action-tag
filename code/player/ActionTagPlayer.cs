@@ -20,8 +20,6 @@ namespace ActionTag
 			Controller = new ActionTagWalkController();
 			Animator = new StandardPlayerAnimator();
 			Camera = new ActionTagFirstPersonCamera();
-			
-			SetTeam( new NoneTeam() );
 
 			EnableAllCollisions = true;
 			EnableDrawing = true;
@@ -43,5 +41,7 @@ namespace ActionTag
 			controller?.Simulate( cl, this, GetActiveAnimator() );
 			SimulateActiveChild( cl, ActiveChild );
 		}
+		
+		
 	}
 }

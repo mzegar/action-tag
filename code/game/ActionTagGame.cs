@@ -72,12 +72,23 @@ namespace ActionTag
 			var player = new ActionTagPlayer();
 			client.Pawn = player;
 
-			if ( Round is WaitingRound or PreRound )
+			if ( Round is WaitingRound )
 			{
 				player.Respawn();
 			}
+			else
+			{
+				player.MakeSpectator();
+			}
 		}
-		
+
+		public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
+		{
+			base.ClientDisconnect( cl, reason );
+
+			Round?.OnPlayerLeave( cl.Pawn );
+		}
+
 		public override void OnKilled( Entity entity)
 		{
 			if ( entity is ActionTagPlayer player )

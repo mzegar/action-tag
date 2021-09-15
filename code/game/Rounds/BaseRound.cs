@@ -9,9 +9,6 @@ namespace ActionTag
         public virtual int RoundDuration => 0;
         public virtual string RoundName => "";
 
-        public List<ActionTagPlayer> Players = new();
-        public List<ActionTagPlayer> Spectators = new();
-
         public float RoundEndTime { get; set; }
 
         public float TimeLeft
@@ -41,42 +38,16 @@ namespace ActionTag
             if (Host.IsServer)
             {
                 RoundEndTime = 0f;
-                Players.Clear();
-                Spectators.Clear();
             }
 
             OnFinish();
-        }
-
-        protected void AddPlayer(ActionTagPlayer player)
-        {
-            Host.AssertServer();
-
-            if (!Players.Contains(player))
-            {
-                Players.Add(player);
-            }
-        }
-        
-        protected void AddSpectator(ActionTagPlayer player)
-        {
-	        Host.AssertServer();
-
-	        if (!Spectators.Contains(player))
-	        {
-		        Spectators.Add(player);
-	        }
         }
 
         public virtual void OnPlayerSpawn(ActionTagPlayer player) { }
 
         public virtual void OnPlayerKilled(ActionTagPlayer player) { }
 
-        public virtual void OnPlayerLeave(ActionTagPlayer player)
-        {
-            Players.Remove(player);
-            Spectators.Remove(player);
-        }
+        public virtual void OnPlayerLeave(Entity ent) { }
 
         public virtual void OnSecond()
         {

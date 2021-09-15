@@ -14,39 +14,9 @@ namespace ActionTag
 
         public override void OnPlayerKilled(ActionTagPlayer player)
         {
-	        AddSpectator( player );
 	        base.OnPlayerKilled(player);
 	        
 	        CheckRoundStatus();
-        }
-
-        protected override void OnStart()
-        {
-	        if ( !Host.IsServer )
-	        {
-		        return;
-	        }
-
-	        foreach ( var client in Client.All )
-	        {
-		        if ( client.Pawn is ActionTagPlayer player )
-		        {
-			        player.Respawn();
-		        }
-	        }
-	        
-	        
-	        for ( var i = 0; i < Players.Count; ++i )
-	        {
-		        if ( i % 2 == 0 )
-		        {
-			        Players[i].SetTeam(ActionTagGame.Instance.ChasersTeam);
-		        }
-		        else
-		        {
-			        Players[i].SetTeam(ActionTagGame.Instance.RunnerTeam);
-		        }
-	        }
         }
 
         protected override void OnTimeUp()
@@ -58,13 +28,11 @@ namespace ActionTag
 
         public override void OnPlayerSpawn(ActionTagPlayer player)
         {
-            AddPlayer( player );
-            base.OnPlayerSpawn( player );
+	        player.MakeSpectator();
         }
         
-        public override void OnPlayerLeave(ActionTagPlayer player)
+        public override void OnPlayerLeave(Entity ent)
         {
-	        base.OnPlayerLeave( player );
 	        CheckRoundStatus();
         }
 
@@ -81,13 +49,14 @@ namespace ActionTag
         /// </summary>
         private BaseTeam CheckForWinningTeam()
         {
-	        var aliveRunners = !Players.Any( ( p ) => p.Team is RunnerTeam && !p.IsSpectator );
+	        var alivePlayers = Utils.GetAlivePlayers();
+	        var aliveRunners = !alivePlayers.Any( ( p ) => p.Team is RunnerTeam && !p.IsSpectator );
 	        if ( !aliveRunners )
 	        {
 		        return ActionTagGame.Instance?.ChasersTeam;
 	        }
 	        
-	        var aliveChasers = !Players.Any( ( p ) => p.Team is ChasersTeam && !p.IsSpectator );
+	        var aliveChasers = !alivePlayers.Any( ( p ) => p.Team is ChasersTeam && !p.IsSpectator );
 	        if ( !aliveChasers )
 	        {
 		        return ActionTagGame.Instance?.RunnerTeam;

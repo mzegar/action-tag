@@ -22,6 +22,13 @@ namespace ActionTag
 			base.OnPlayerKilled( player );
 		}
 
+		public override void OnPlayerSpawn( ActionTagPlayer player )
+		{
+			base.OnPlayerSpawn( player );
+			
+			player.SetTeam( ActionTagGame.Instance.NoneTeam );
+		}
+
 		protected override void OnStart()
 		{
 			if ( !Host.IsServer )
