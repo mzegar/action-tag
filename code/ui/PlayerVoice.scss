@@ -1,0 +1,19 @@
+﻿PlayerVoice {
+  position: absolute;
+  flex-direction: column;
+  right: 200px;
+  bottom: 30px;
+  border-radius: 8px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px 5px 10px 5px;
+  transition: opacity 0.3s ease-in;
+  
+  Label {
+    font-size: 30px;
+  }
+  
+  &.fadein {
+    opacity: 0;
+  }
+}

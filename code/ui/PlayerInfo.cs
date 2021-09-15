@@ -54,8 +54,8 @@ namespace ActionTag
 				return;
 			}
 			
-			_teamWrapper.SetClass("disabled", player.Team is NoneTeam);
-			_currentTeam.Text = player.Team.Name;
+			_teamWrapper.SetClass("disabled", player.Team is null or NoneTeam);
+			_currentTeam.Text = player.Team?.Name;
 		}
 	}
 }

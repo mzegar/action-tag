@@ -40,6 +40,8 @@ namespace ActionTag
 				AddChild<PlayerInfo>();
 				AddChild<RoundInfo>();
 				AddChild<ChatBox>();
+				AddChild<VoiceList>();
+				AddChild<PlayerVoice>();
 			}
 		}
 
