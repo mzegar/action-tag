@@ -1,4 +1,4 @@
-﻿using ActionTag;
+﻿using Sandbox;
 
 namespace ActionTag
 {
@@ -9,6 +9,13 @@ namespace ActionTag
 			StyleSheet.Load( "/ui/Crosshair.scss" );
 			
 			Add.Panel( "Crosshair" );
+		}
+
+		public override void Tick()
+		{
+			base.Tick();
+
+			Enabled = !Input.Down( InputButton.Score );
 		}
 	}
 }

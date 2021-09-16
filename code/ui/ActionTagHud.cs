@@ -41,6 +41,7 @@ namespace ActionTag
 				AddChild<ChatBox>();
 				AddChild<VoiceList>();
 				AddChild<PlayerVoice>();
+				AddChild<Scoreboard>();
 			}
 		}
 

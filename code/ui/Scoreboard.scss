@@ -1,0 +1,83 @@
+﻿Scoreboard {
+  position: absolute;
+  left: 50%;
+  align-self: center;
+  transform: translateX(-50%);
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  
+  .header {
+    align-items: center;
+    margin: 20px;
+    
+    .map {
+      font-size: 28px;
+      color: white;
+    }
+    
+    .players {
+      font-size: 15px;
+      color: #c2c2c2;
+    }
+    
+    .title {
+      flex-direction: column;
+    }
+    
+    .icon {
+      background-image: url( /ui/logo_transparent.png );
+      background-size: 100%;
+      width: 130px;
+      height: 80px;
+      margin-right: 20px;
+    }
+  }
+  
+  .team-container {
+    margin: 0px 20px 20px 20px;
+    flex-direction: column;
+    border-radius: 8px;
+    
+    .team-header {
+      background-color: rgba(41, 98, 255, 0.7);
+      border-radius: 8px 8px 0 0;
+      padding: 2px;
+      
+      .team-name {
+        font-size: 18px;
+        color: white;
+      }
+    }
+
+    .canvas {
+      flex-direction: column;
+      
+      .entry {
+        padding: 7px;
+        color: white;
+        
+        Label {
+          font-size: 14px;
+        }
+        
+        &:nth-child( even ) {
+          background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        &:nth-child( odd ) {
+          background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        &:last-child {
+          border-bottom-left-radius: 8px;
+          border-bottom-right-radius: 8px;
+        }
+      }
+    }
+  }
+  
+  .name {
+    font-size: 20px;
+  }
+}

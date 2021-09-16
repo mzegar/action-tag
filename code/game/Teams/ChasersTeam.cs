@@ -2,7 +2,9 @@
 {
 	public partial class ChasersTeam : BaseTeam
 	{
+		public override string ScoreboardName => "🏃‍♂️ Chasers";
 		public override string Name => "🏃‍♂️ Chaser";
+		public override int Index => 1;
 
 		public override void OnJoin( ActionTagPlayer player )
 		{

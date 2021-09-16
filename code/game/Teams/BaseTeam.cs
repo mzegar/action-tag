@@ -4,7 +4,9 @@ namespace ActionTag.Teams
 {
 	public abstract partial class BaseTeam : NetworkComponent
 	{
+		public virtual string ScoreboardName => "";
 		public virtual string Name => "";
+		public virtual int Index => 0;
 
 		public virtual void OnJoin( ActionTagPlayer player )
 		{

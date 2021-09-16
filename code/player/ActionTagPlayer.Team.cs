@@ -23,6 +23,9 @@ namespace ActionTag
 				PreviousTeam?.OnLeave(this);
 				Team?.OnJoin(this);
 				PreviousTeam = newTeam;
+				
+				var client = GetClientOwner();
+				client.SetScore("team", Team.Index);
 			}
 		}
 	}
