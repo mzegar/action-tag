@@ -35,9 +35,9 @@ namespace ActionTag
 			
 			AddHeader();
 			
-			AddTeamHeader( ActionTagGame.Instance?.ChasersTeam );
-			AddTeamHeader( ActionTagGame.Instance?.RunnerTeam );
-			AddTeamHeader( ActionTagGame.Instance?.NoneTeam );
+			AddTeamHeader( new ChasersTeam() );
+			AddTeamHeader( new RunnerTeam() );
+			AddTeamHeader( new NoneTeam() );
 
 			foreach ( var player in PlayerScore.All )
 			{
