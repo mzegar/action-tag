@@ -6,6 +6,7 @@ namespace ActionTag.Teams
 	{
 		public override string ScoreboardName => "🐇 Runners";
 		public override string Name => "🐇 Runner";
+		public override string Emoji => "🐇";
 		public override int Index => 2;
 		
 		public override void OnJoin( ActionTagPlayer player )

@@ -42,6 +42,7 @@ namespace ActionTag
 				AddChild<VoiceList>();
 				AddChild<PlayerVoice>();
 				AddChild<Scoreboard>();
+				AddChild<NameTags>();
 			}
 		}
 

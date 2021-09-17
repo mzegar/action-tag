@@ -22,7 +22,7 @@ namespace ActionTag
 				return;
 			}
 
-			Enabled = player.Controller.IsFrozen;
+			Enabled = player.Controller?.IsFrozen ?? false;
 		}
 	}
 }
