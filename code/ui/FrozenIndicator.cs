@@ -10,7 +10,8 @@ namespace ActionTag
 			StyleSheet.Load("/ui/FrozenIndicator.scss");
 
 			var frozenIndicator = Add.Panel( "" );
-			frozenIndicator.Add.Label( "❄️ Frozen!" );
+			frozenIndicator.Add.Label( "❄️" );
+			frozenIndicator.Add.Label( "Frozen!", "text" );
 		}
 
 		public override void Tick()

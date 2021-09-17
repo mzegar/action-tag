@@ -11,7 +11,10 @@
 
   Label {
     font-size: 30px;
-    font-weight: bold;
     color: #69EAFF;
+    
+    &.text {
+      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    }
   }
 }
