@@ -54,6 +54,7 @@ namespace ActionTag
 			{
 				AddChild<SpeedInfo>();
 				AddChild<Crosshair>();
+				AddChild<FrozenIndicator>();
 			}
 
 			public override void Tick()

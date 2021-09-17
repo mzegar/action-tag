@@ -41,6 +41,7 @@ namespace ActionTag
 				if ( client.Pawn is ActionTagPlayer player )
 				{
 					player.Respawn();
+					player.Controller.IsFrozen = false;
 				}
 			}
 		}

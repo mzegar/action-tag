@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using ActionTag.Teams;
+﻿using ActionTag.Teams;
 using Sandbox;
 
 namespace ActionTag
