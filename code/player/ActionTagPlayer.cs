@@ -1,4 +1,5 @@
 ﻿using System;
+using ActionTag.Teams;
 using Sandbox;
 
 namespace ActionTag
@@ -27,10 +28,8 @@ namespace ActionTag
 		{
 			Inventory = new BaseInventory( this );
 			
-			// Setup glow for when frozen.
 			GlowDistanceStart = 70;
 			GlowDistanceEnd = int.MaxValue;
-			GlowColor = Color.Blue;
 		}
 
 		/// <summary>
@@ -76,7 +75,18 @@ namespace ActionTag
 				return;
 			}
 
-			GlowActive = actionTagController.IsFrozen;
+			GlowActive = Team is ChasersTeam || actionTagController.IsFrozen;
+			if ( Team is ChasersTeam )
+			{
+				GlowColor = Color.Red;
+				return;
+			}
+
+			if ( actionTagController.IsFrozen )
+			{
+				GlowColor = Color.Cyan;
+				return;
+			}
 		}
 		
 		public void OnFrozen()
