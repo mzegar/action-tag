@@ -103,5 +103,10 @@ namespace ActionTag
 
 			base.OnKilled( entity);
 		}
+
+		public void OnTagged(ActionTagPlayer player)
+		{
+			Round?.OnPlayerTagged(player);
+		}
 	}
 }

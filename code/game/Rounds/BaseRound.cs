@@ -46,7 +46,9 @@ namespace ActionTag
         public virtual void OnPlayerSpawn(ActionTagPlayer player) { }
 
         public virtual void OnPlayerKilled(ActionTagPlayer player) { }
-
+        
+        public virtual void OnPlayerTagged(ActionTagPlayer player) { }
+        
         public virtual void OnPlayerLeave(Entity entity) { }
 
         public virtual void OnSecond()

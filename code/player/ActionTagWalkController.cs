@@ -2,8 +2,11 @@
 
 namespace ActionTag
 {
-	public class ActionTagWalkController : BasePlayerController
+	public partial class ActionTagWalkController : BasePlayerController
 	{
+		[Net]
+		public bool IsFrozen { get; set; } = false;
+		
 		public float WalkSpeed { get; set; } = 150.0f;
 		public float DefaultSpeed { get; set; } = 260.0f;
 		public float Acceleration { get; set; } = 5.0f;
@@ -25,7 +28,6 @@ namespace ActionTag
 		public float AirControl { get; set; } = 42.0f;
 		public bool Swimming { get; set; } = false;
 		public bool AutoJump { get; set; } = false;
-		public bool IsFrozen { get; set; } = false;
 
 		public Duck Duck;
 		public Unstuck Unstuck;

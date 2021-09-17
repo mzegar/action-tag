@@ -9,7 +9,7 @@ namespace ActionTag
 		/// </summary>
 		private readonly Clothing.Container _clothing = new();
 
-		
+
 		public bool IsSpectator { get => Camera is not ActionTagFirstPersonCamera; }
 		public int HorizontalSpeed { get => (int)Velocity.WithZ(0).Length; }
 		
@@ -25,6 +25,11 @@ namespace ActionTag
 		public ActionTagPlayer()
 		{
 			Inventory = new BaseInventory( this );
+			
+			// Setup glow for when frozen.
+			GlowDistanceStart = 70;
+			GlowDistanceEnd = 4096;
+			GlowColor = Color.Blue;
 		}
 
 		/// <summary>
@@ -64,23 +69,19 @@ namespace ActionTag
 			var controller = GetActiveController();
 			controller?.Simulate( cl, this, GetActiveAnimator() );
 			SimulateActiveChild( cl, ActiveChild );
-		}
 
-		public override void TakeDamage( DamageInfo info )
+			if ( controller is not ActionTagWalkController actionTagController )
+			{
+				return;
+			}
+
+			GlowActive = actionTagController.IsFrozen;
+		}
+		
+		public void OnFrozen()
 		{
-			// No damage allowed outside of the playground.
-			if ( ActionTagGame.Instance?.Round is not PlayRound )
-			{
-				return;
-			}
-
-			// Only damage people that are not on your team.
-			if ( info.Attacker is ActionTagPlayer player && player.Team.Name == Team.Name )
-			{
-				return;
-			}
-			
-			base.TakeDamage( info );
+			ActionTagGame.Instance?.OnTagged( this );
 		}
+
 	}
 }

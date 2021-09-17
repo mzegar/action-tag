@@ -29,6 +29,13 @@ namespace ActionTag
 	        CheckRoundStatus();
         }
 
+        public override void OnPlayerTagged( ActionTagPlayer player )
+        {
+	        base.OnPlayerTagged( player );
+	        
+	        CheckRoundStatus();
+        }
+
         protected override void OnTimeUp()
         {
             base.OnTimeUp();
@@ -62,7 +69,7 @@ namespace ActionTag
 	        var alivePlayers = Utils.GetAlivePlayers();
 
 	        var aliveChasers = 0;
-	        var aliveRunners = 0;
+	        var aliveNonFrozenRunners = 0;
 	        foreach ( var player in alivePlayers )
 	        {
 		        switch (player.Team)
@@ -71,15 +78,13 @@ namespace ActionTag
 				        aliveChasers += 1;
 				        break;
 			        case RunnerTeam:
-				        aliveRunners += 1;
+				        if (!player.Controller.IsFrozen)
+							aliveNonFrozenRunners += 1;
 				        break;
 		        }
 	        }
-	        
-	        Log.Info(aliveRunners  );
-	        Log.Info(aliveChasers  );
 
-	        if ( aliveRunners == 0 )
+	        if ( aliveNonFrozenRunners == 0 )
 	        {
 		        return ActionTagGame.Instance?.ChasersTeam;
 	        }

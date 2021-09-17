@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using ActionTag.Teams;
 using Sandbox;
 
 namespace ActionTag
@@ -42,15 +43,23 @@ namespace ActionTag
 				if ( !tr.Entity.IsValid() ) continue;
 
 				if ( !IsServer ) continue;
+				
+				if ( ActionTagGame.Instance?.Round is not PlayRound ) continue;
+
+				if ( Owner is not ActionTagPlayer player || tr.Entity is not ActionTagPlayer otherPlayer ) return;
 
 				using ( Prediction.Off() )
 				{
-					var damageInfo = DamageInfo.FromBullet( tr.EndPos, forward * 100 * force, damage )
-						.UsingTraceResult( tr )
-						.WithAttacker( Owner )
-						.WithWeapon( this );
-
-					tr.Entity.TakeDamage( damageInfo );
+					switch (player.Team)
+					{
+						case ChasersTeam when otherPlayer.Team is RunnerTeam:
+							otherPlayer.Controller.IsFrozen = true;
+							otherPlayer.OnFrozen();
+							break;
+						case RunnerTeam when otherPlayer.Team is RunnerTeam && !player.Controller.IsFrozen:
+							otherPlayer.Controller.IsFrozen = false;
+							break;
+					}
 				}
 			}
 		}
