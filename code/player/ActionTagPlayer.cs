@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using System;
+using Sandbox;
 
 namespace ActionTag
 {
@@ -28,7 +29,7 @@ namespace ActionTag
 			
 			// Setup glow for when frozen.
 			GlowDistanceStart = 70;
-			GlowDistanceEnd = 4096;
+			GlowDistanceEnd = int.MaxValue;
 			GlowColor = Color.Blue;
 		}
 
