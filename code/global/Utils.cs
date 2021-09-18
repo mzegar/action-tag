@@ -45,10 +45,10 @@ namespace ActionTag
 			return aliveChasers;
 		}
 
-		public static List<ActionTagPlayer> GetShuffledAlivePlayers()
+		public static List<Client> GetShuffledClients()
 		{
-			var alivePlayers = GetAlivePlayers();
-			return alivePlayers.OrderBy( ( _ ) => Rand.Int( 0, alivePlayers.Count ) ).ToList();
+			var players = Client.All;
+			return players.OrderBy( ( _ ) => Rand.Int( 0, players.Count ) ).ToList();
 		}
 	}
 }

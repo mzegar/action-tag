@@ -23,33 +23,16 @@ namespace ActionTag
 	        {
 		        return;
 	        }
-	        
+
 	        _playedCountDownSound = false;
-	        
-	        foreach ( var client in Client.All )
+
+	        var shuffledClients = Utils.GetShuffledClients();
+	        foreach ( var client in shuffledClients )
 	        {
 		        if ( client.Pawn is ActionTagPlayer player )
 		        {
-			        player.Respawn();
 			        player.SetTeam( ActionTagGame.Instance.NoneTeam );
-		        }
-	        }
-	        
-	        AssignTeams();
-        }
-
-        private void AssignTeams()
-        {
-	        var alivePlayers = Utils.GetShuffledAlivePlayers();
-	        for ( var i = 0; i < alivePlayers.Count; ++i )
-	        {
-		        if ( i % 2 == 0 )
-		        {
-			        SetTeamRunners(alivePlayers[i]);
-		        }
-		        else
-		        {
-			        SetTeamChasers(alivePlayers[i]);
+			        player.Respawn();
 		        }
 	        }
         }
