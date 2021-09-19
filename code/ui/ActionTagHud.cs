@@ -60,7 +60,7 @@ namespace ActionTag
 			public override void Tick()
 			{
 				base.Tick();
-
+				
 				Enabled = Local.Pawn is ActionTagPlayer {IsSpectator: false};
 			}
 		}

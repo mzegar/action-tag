@@ -1,5 +1,6 @@
 ﻿using ActionTag.Teams;
 using Sandbox;
+using Sandbox.UI;
 
 namespace ActionTag
 {
@@ -54,10 +55,14 @@ namespace ActionTag
 
         public void CheckRoundStatus()
         {
-	        if ( CheckForWinningTeam() != ActionTagGame.Instance?.NoneTeam )
+	        var winningTeam = CheckForWinningTeam();
+	        if ( winningTeam == ActionTagGame.Instance?.NoneTeam )
 	        {
-		        ActionTagGame.Instance?.ForceRoundChange(new PostRound());
+		        return;
 	        }
+
+	        RPC.SendMessage($"{winningTeam.ScoreboardName} Win!");
+	        ActionTagGame.Instance?.ForceRoundChange(new PostRound());
         }
 
         /// <summary>
