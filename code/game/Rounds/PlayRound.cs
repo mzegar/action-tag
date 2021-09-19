@@ -20,6 +20,9 @@ namespace ActionTag
 	        {
 		        chaser.Controller.IsFrozen = false;
 	        }
+	        
+	        // Let's make sure there are enough players on each team.
+	        CheckRoundStatus();
         }
 
         public override void OnPlayerKilled(ActionTagPlayer player)
