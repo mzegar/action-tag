@@ -73,6 +73,12 @@ namespace ActionTag
 					SetTeamChasers(player);
 		        }
 	        }
+
+	        // Refreeze the chaster if they suicided.
+	        if ( player.Team is ChasersTeam )
+	        {
+		        player.Controller.IsFrozen = true;
+	        }
         }
 
         protected override void OnTimeUp()
