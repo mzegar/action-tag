@@ -9,8 +9,8 @@ namespace ActionTag
 		
 		public float WalkSpeed { get; set; } = 150.0f;
 		public float DefaultSpeed { get; set; } = 260.0f;
-		public float Acceleration { get; set; } = 5.0f;
-		public float AirAcceleration { get; set; } = 1000.0f;
+		public float Acceleration { get; set; } = 10.0f;
+		public float AirAcceleration { get; set; } = 800.0f;
 		public float FallSoundZ { get; set; } = -30.0f;
 		public float GroundFriction { get; set; } = 4.0f;
 		public float StopSpeed { get; set; } = 75.0f;
