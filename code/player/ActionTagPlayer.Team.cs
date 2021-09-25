@@ -7,7 +7,7 @@ namespace ActionTag
 	{
 		[Net] private BaseTeam PreviousTeam { get; set; }
 
-		[Net, OnChangedCallback] public BaseTeam Team { get; private set; }
+		[Net, Change] public BaseTeam Team { get; private set; }
 		private void OnTeamChanged()
 		{
 			PlayerInfo.Instance?.UpdateCurrentTeam();
