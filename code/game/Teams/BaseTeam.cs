@@ -2,7 +2,7 @@
 
 namespace ActionTag.Teams
 {
-	public abstract partial class BaseTeam : NetworkComponent
+	public abstract partial class BaseTeam : BaseNetworkable
 	{
 		public virtual string ScoreboardName => "";
 		public virtual string Name => "";
@@ -11,13 +11,12 @@ namespace ActionTag.Teams
 
 		public virtual void OnJoin( ActionTagPlayer player )
 		{
-			Log.Info($"${player.GetClientOwner().Name} joined {Name}");
+			Log.Info($"${player.Client.Name} joined {Name}");
 		}
 		
 		public virtual void OnLeave( ActionTagPlayer player )
 		{
-			
-			Log.Info($"${player.GetClientOwner().Name} left {Name}");
+			Log.Info($"${player.Client.Name} left {Name}");
 		}
 	}
 }

@@ -71,6 +71,8 @@ namespace ActionTag
 
 			var player = new ActionTagPlayer( client );
 			client.Pawn = player;
+			
+			RPC.OnClientJoin(client);
 
 			if ( Round is WaitingRound or PreRound )
 			{
@@ -89,6 +91,8 @@ namespace ActionTag
 				player.RemoveRagdollEntity();
 			}
 			
+			RPC.OnClientDisconnect(cl.UserId);
+
 			base.ClientDisconnect( cl, reason );
 			
 			Round?.OnPlayerLeave(cl.Pawn);

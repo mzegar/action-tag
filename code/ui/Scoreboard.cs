@@ -20,29 +20,29 @@ namespace ActionTag
 			public Sandbox.UI.Panel TeamHeader;
 			public Sandbox.UI.Panel Canvas;
 		}
-		
-		public Dictionary<int, ScoreboardEntry> Entries = new();
-		public Dictionary<int, TeamSection> TeamSections = new();
-		public Label playerCount;
+
+		public static Scoreboard Instance;
+
+		private readonly Dictionary<int, ScoreboardEntry> _entries = new();
+		private readonly Dictionary<int, TeamSection> _teamSections = new();
+		private Label _playerCount;
 		
 		public Scoreboard()
 		{
 			StyleSheet.Load( "/ui/Scoreboard.scss" );
 
-			PlayerScore.OnPlayerAdded += AddPlayer;
-			PlayerScore.OnPlayerUpdated += UpdatePlayer;
-			PlayerScore.OnPlayerRemoved += RemovePlayer;
-			
 			AddHeader();
 			
 			AddTeamHeader( new ChasersTeam() );
 			AddTeamHeader( new RunnerTeam() );
 			AddTeamHeader( new NoneTeam() );
 
-			foreach ( var player in PlayerScore.All )
+			foreach ( var player in Client.All )
 			{
 				AddPlayer( player );
 			}
+			
+			Instance = this;
 		}
 		
 		public override void Tick()
@@ -50,7 +50,7 @@ namespace ActionTag
 			base.Tick();
 			
 			SetClass( "disabled", !Input.Down( InputButton.Score ) );
-			playerCount.Text = Client.All.Count == 1 ? $"{Client.All.Count} Player" : $"{Client.All.Count} Players";
+			_playerCount.Text = Client.All.Count == 1 ? $"{Client.All.Count} Player" : $"{Client.All.Count} Players";
 		}
 
 		private void AddHeader()
@@ -61,7 +61,7 @@ namespace ActionTag
 			var headerTitle = header.Add.Panel("title");
 
 			headerTitle.Add.Label( Global.MapName, "map" );
-			playerCount = headerTitle.Add.Label( "", "players" );
+			_playerCount = headerTitle.Add.Label( "", "players" );
 		}
 		
 		private void AddTeamHeader(BaseTeam team)
@@ -73,77 +73,78 @@ namespace ActionTag
 			section.Canvas = section.TeamContainer.Add.Panel( "canvas" );
 			section.TeamName = section.TeamHeader.Add.Label( team.ScoreboardName, "team-name" );
 
-			TeamSections[team.Index] = section;
+			_teamSections[team.Index] = section;
 		}
 
-		private void AddPlayer( PlayerScore.Entry entry )
+		public void AddPlayer( Client entry )
 		{
-			var teamIndex = entry.Get( "team", 0 );
-
-			if ( !TeamSections.TryGetValue( teamIndex, out var section ) )
+			if ( _entries.ContainsKey( entry.UserId ) )
 			{
-				section = TeamSections[ 0 ];
+				return;
+			}
+			
+			var teamIndex = entry.GetValue( "team", 0 );
+			if ( !_teamSections.TryGetValue( teamIndex, out var section ) )
+			{
+				section = _teamSections[ 0 ];
 			}
 
 			var p = section.Canvas.AddChild<ScoreboardEntry>();
 			p.UpdateFrom( entry );
-			Entries[entry.Id] = p;
+			_entries[entry.UserId] = p;
 		}
 
-		private void UpdatePlayer( PlayerScore.Entry entry )
+		public void UpdatePlayer( Client entry )
 		{
-			if ( !Entries.TryGetValue( entry.Id, out var panel ) )
+			if ( !_entries.TryGetValue( entry.UserId, out var panel ) )
 			{
 				return;
 			}
-
+			
 			var currentTeamIndex = 0;
-			var newTeamIndex = entry.Get( "team", 0 );
-
-			foreach (var kv in TeamSections.Where(kv => kv.Value.Canvas == panel.Parent))
+			var newTeamIndex = entry.GetValue( "team", 0 );
+			
+			foreach (var kv in _teamSections.Where(kv => kv.Value.Canvas == panel.Parent))
 			{
 				currentTeamIndex = kv.Key;
 			}
-
+			
 			if ( currentTeamIndex != newTeamIndex )
 			{
-				panel.Parent = TeamSections[newTeamIndex].Canvas;
+				panel.Parent = _teamSections[newTeamIndex].Canvas;
 			}
-
+			
 			panel.UpdateFrom( entry );
 		}
 
-		private void RemovePlayer( PlayerScore.Entry entry )
+		
+		public void RemovePlayer( int userId )
 		{
-			if ( !Entries.TryGetValue( entry.Id, out var panel ) )
+			if ( !_entries.TryGetValue( userId, out var panel ) )
 			{
 				return;
 			}
 
 			panel.Delete();
-			Entries.Remove( entry.Id );
+			_entries.Remove( userId );
 		}
 	}
 	
-	public partial class ScoreboardEntry : Panel
+	public class ScoreboardEntry : Panel
 	{
-		public PlayerScore.Entry Entry;
-		public Label PlayerName;
+		private readonly Label _playerName;
 
 		public ScoreboardEntry()
 		{
 			AddClass( "entry" );
 
-			PlayerName = Add.Label( "PlayerName", "name" );
+			_playerName = Add.Label( "PlayerName", "name" );
 		}
 
-		public virtual void UpdateFrom( PlayerScore.Entry entry )
+		public virtual void UpdateFrom( Client entry )
 		{
-			Entry = entry;
-
-			PlayerName.Text = entry.GetString( "name" );
-
-			SetClass( "me", Local.Client != null && entry.Get<ulong>( "steamid", 0 ) == Local.Client.SteamId );
+			_playerName.Text = entry.Name;
+			SetClass( "me", Local.Client != null && entry.GetValue<ulong>( "steamid", 0 ) == Local.Client.SteamId );
 		}
 	}
 }
