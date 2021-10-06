@@ -83,8 +83,8 @@ namespace ActionTag
 				return;
 			}
 			
-			// TODO: Set value here to 0, waiting for sbox fix.
-			if ( !_teamSections.TryGetValue( 0, out var section ) )
+			var teamIndex = entry.GetValue( "team", 0 );
+			if ( !_teamSections.TryGetValue( teamIndex, out var section ) )
 			{
 				section = _teamSections[ 0 ];
 			}
