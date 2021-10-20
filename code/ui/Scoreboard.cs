@@ -26,13 +26,13 @@ namespace ActionTag
 		private readonly Dictionary<int, ScoreboardEntry> _entries = new();
 		private readonly Dictionary<int, TeamSection> _teamSections = new();
 		private Label _playerCount;
-		
+
 		public Scoreboard()
 		{
 			StyleSheet.Load( "/ui/Scoreboard.scss" );
 
 			AddHeader();
-			
+
 			AddTeamHeader( new ChasersTeam() );
 			AddTeamHeader( new RunnerTeam() );
 			AddTeamHeader( new NoneTeam() );
@@ -41,14 +41,20 @@ namespace ActionTag
 			{
 				AddPlayer( player );
 			}
-			
+
 			Instance = this;
 		}
-		
+
 		public override void Tick()
 		{
 			base.Tick();
-			
+
+			foreach ( var player in Client.All )
+			{
+				AddPlayer( player );
+				UpdatePlayer( player );
+			}
+
 			SetClass( "disabled", !Input.Down( InputButton.Score ) );
 			_playerCount.Text = Client.All.Count == 1 ? $"{Client.All.Count} Player" : $"{Client.All.Count} Players";
 		}
@@ -58,15 +64,15 @@ namespace ActionTag
 			var header = Add.Panel( "header" );
 			header.Add.Panel( "icon" );
 
-			var headerTitle = header.Add.Panel("title");
+			var headerTitle = header.Add.Panel( "title" );
 
 			headerTitle.Add.Label( Global.MapName, "map" );
 			_playerCount = headerTitle.Add.Label( "", "players" );
 		}
-		
-		private void AddTeamHeader(BaseTeam team)
+
+		private void AddTeamHeader( BaseTeam team )
 		{
-			var section = new TeamSection{};
+			var section = new TeamSection { };
 			section.TeamContainer = Add.Panel( "team-container" );
 			section.TeamHeader = section.TeamContainer.Add.Panel( "team-header" );
 			section.Header = section.TeamContainer.Add.Panel( "table-header" );
@@ -82,11 +88,11 @@ namespace ActionTag
 			{
 				return;
 			}
-			
+
 			var teamIndex = entry.GetValue( "team", 0 );
 			if ( !_teamSections.TryGetValue( teamIndex, out var section ) )
 			{
-				section = _teamSections[ 0 ];
+				section = _teamSections[0];
 			}
 
 			var p = section.Canvas.AddChild<ScoreboardEntry>();
@@ -100,24 +106,24 @@ namespace ActionTag
 			{
 				return;
 			}
-			
+
 			var currentTeamIndex = 0;
 			var newTeamIndex = entry.GetValue( "team", 0 );
-			
-			foreach (var kv in _teamSections.Where(kv => kv.Value.Canvas == panel.Parent))
+
+			foreach ( var kv in _teamSections.Where( kv => kv.Value.Canvas == panel.Parent ) )
 			{
 				currentTeamIndex = kv.Key;
 			}
-			
+
 			if ( currentTeamIndex != newTeamIndex )
 			{
 				panel.Parent = _teamSections[newTeamIndex].Canvas;
 			}
-			
+
 			panel.UpdateFrom( entry );
 		}
 
-		
+
 		public void RemovePlayer( int userId )
 		{
 			if ( !_entries.TryGetValue( userId, out var panel ) )
@@ -129,7 +135,7 @@ namespace ActionTag
 			_entries.Remove( userId );
 		}
 	}
-	
+
 	public class ScoreboardEntry : Panel
 	{
 		private readonly Label _playerName;
