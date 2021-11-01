@@ -23,7 +23,7 @@ namespace ActionTag
 
 		public static Scoreboard Instance;
 
-		private readonly Dictionary<int, ScoreboardEntry> _entries = new();
+		private readonly Dictionary<Client, ScoreboardEntry> _entries = new();
 		private readonly Dictionary<int, TeamSection> _teamSections = new();
 		private Label _playerCount;
 
@@ -37,11 +37,6 @@ namespace ActionTag
 			AddTeamHeader( new RunnerTeam() );
 			AddTeamHeader( new NoneTeam() );
 
-			foreach ( var player in Client.All )
-			{
-				AddPlayer( player );
-			}
-
 			Instance = this;
 		}
 
@@ -49,13 +44,23 @@ namespace ActionTag
 		{
 			base.Tick();
 
-			foreach ( var player in Client.All )
+			var isDisabled = !Input.Down( InputButton.Score );
+			SetClass( "disabled", isDisabled );
+
+			if ( isDisabled )
+				return;
+
+			foreach ( var player in Client.All.Except( _entries.Keys ) )
 			{
 				AddPlayer( player );
 				UpdatePlayer( player );
 			}
 
-			SetClass( "disabled", !Input.Down( InputButton.Score ) );
+			foreach ( var player in _entries.Keys.Except( Client.All ) )
+			{
+				RemovePlayer( player );
+			}
+
 			_playerCount.Text = Client.All.Count == 1 ? $"{Client.All.Count} Player" : $"{Client.All.Count} Players";
 		}
 
@@ -84,7 +89,7 @@ namespace ActionTag
 
 		public void AddPlayer( Client entry )
 		{
-			if ( _entries.ContainsKey( entry.UserId ) )
+			if ( _entries.ContainsKey( entry ) )
 			{
 				return;
 			}
@@ -97,12 +102,15 @@ namespace ActionTag
 
 			var p = section.Canvas.AddChild<ScoreboardEntry>();
 			p.UpdateFrom( entry );
-			_entries[entry.UserId] = p;
+			_entries[entry] = p;
 		}
 
 		public void UpdatePlayer( Client entry )
 		{
-			if ( !_entries.TryGetValue( entry.UserId, out var panel ) )
+			if ( entry == null )
+				return;
+
+			if ( !_entries.TryGetValue( entry, out var panel ) )
 			{
 				return;
 			}
@@ -124,15 +132,15 @@ namespace ActionTag
 		}
 
 
-		public void RemovePlayer( int userId )
+		public void RemovePlayer( Client client )
 		{
-			if ( !_entries.TryGetValue( userId, out var panel ) )
+			if ( !_entries.TryGetValue( client, out var panel ) )
 			{
 				return;
 			}
 
 			panel.Delete();
-			_entries.Remove( userId );
+			_entries.Remove( client );
 		}
 	}
 

@@ -11,7 +11,7 @@ namespace ActionTag
 
 		[Net]
 		public BaseRound Round { get; private set; } = new WaitingRound();
-		
+
 		public NoneTeam NoneTeam { get; }
 		public RunnerTeam RunnerTeam { get; }
 		public ChasersTeam ChasersTeam { get; }
@@ -19,12 +19,12 @@ namespace ActionTag
 		public ActionTagGame()
 		{
 			Instance = this;
-			
+
 			if ( IsServer )
 			{
 				_ = new ActionTagHud();
 			}
-			
+
 			NoneTeam = new NoneTeam();
 			RunnerTeam = new RunnerTeam();
 			ChasersTeam = new ChasersTeam();
@@ -36,29 +36,29 @@ namespace ActionTag
 		/// Changes the round if minimum players is met. Otherwise, force changes to "WaitingRound"
 		/// </summary>
 		/// <param name="round"> The round to change to if minimum players is met.</param>
-		public void ChangeRound(BaseRound round)
+		public void ChangeRound( BaseRound round )
 		{
-			Assert.NotNull(round);
+			Assert.NotNull( round );
 
-			ForceRoundChange(Utils.HasMinimumPlayers() ? round : new WaitingRound());
+			ForceRoundChange( Utils.HasMinimumPlayers() ? round : new WaitingRound() );
 		}
 
 		/// <summary>
 		/// Force changes a round regardless of player count.
 		/// </summary>
 		/// <param name="round"> The round to change to.</param>
-		public void ForceRoundChange(BaseRound round)
+		public void ForceRoundChange( BaseRound round )
 		{
 			Round.Finish();
 			Round = round;
 			Round.Start();
 		}
-		
+
 		private async Task StartGameTimer()
 		{
-			ForceRoundChange(new WaitingRound());
+			ForceRoundChange( new WaitingRound() );
 
-			while (true)
+			while ( true )
 			{
 				Round?.OnSecond();
 				await Task.NextPhysicsFrame();
@@ -71,8 +71,6 @@ namespace ActionTag
 
 			var player = new ActionTagPlayer( client );
 			client.Pawn = player;
-			
-			RPC.OnClientJoin(client);
 
 			if ( Round is WaitingRound or PreRound )
 			{
@@ -90,27 +88,30 @@ namespace ActionTag
 			{
 				player.RemoveRagdollEntity();
 			}
-			
-			RPC.OnClientDisconnect(cl.UserId);
 
 			base.ClientDisconnect( cl, reason );
-			
-			Round?.OnPlayerLeave(cl.Pawn);
+
+			Round?.OnPlayerLeave( cl.Pawn );
 		}
 
-		public override void OnKilled( Entity entity)
+		public override void OnKilled( Entity entity )
 		{
 			if ( entity is ActionTagPlayer player )
 			{
 				Round?.OnPlayerKilled( player );
 			}
 
-			base.OnKilled( entity);
+			base.OnKilled( entity );
 		}
 
-		public void OnTagged(ActionTagPlayer player)
+		public void OnTagged( ActionTagPlayer player )
 		{
-			Round?.OnPlayerTagged(player);
+			Round?.OnPlayerTagged( player );
+		}
+
+		public override void DoPlayerSuicide( Client cl )
+		{
+			// Do nothing.
 		}
 	}
 }
